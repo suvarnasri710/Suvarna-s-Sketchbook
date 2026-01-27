@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suvarna's Sketchbook</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --bg-paper: #F9F7F2;      
+            --text-ink: #3E3226;      
+            --accent-green: #6B7F60;  
+            --accent-gold: #C8A165;   
+            
+            --font-title: 'Cinzel Decorative', cursive; 
+            --font-body: 'Cormorant Garamond', serif;   
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-body);
+            background-color: var(--bg-paper);
+            color: var(--text-ink);
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(249,247,242,0.9));
+            overflow: hidden; 
+            scroll-behavior: smooth;
+        }
+
+        /* --- SPLASH SCREEN --- */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--bg-paper);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease;
+        }
+
+        #splash-video {
+            width: 60%; 
+            height: auto;
+            max-height: 80vh;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(193, 161, 101, 0.4);
+            object-fit: cover;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 50px;
+            position: sticky;
+            top: 0;
+            background-color: rgba(249, 247, 242, 0.98);
+            z-index: 100;
+            border-bottom: 2px solid var(--accent-gold);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: padding 0.3s;
+        }
+
+        .nav-brand img {
+            height: 120px; 
+            width: auto;
+            display: block;
+            mix-blend-mode: multiply; 
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--accent-green);
+            margin-left: 30px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-gold);
+        }
+
+        .nav-links a.active {
+            color: var(--accent-gold);
+            transform: scale(1.1);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-gold);
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 80px 20px;
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Home Styling */
+        .home-content h1 {
+            font-family: var(--font-title);
+            font-size: 6rem; 
+            margin: 0;
+            color: var(--text-ink);
+            text-shadow: 2px 2px 0px rgba(200, 161, 101, 0.2);
+            line-height: 1.1;
+        }
+
+        .home-content p {
+            font-size: 1.8rem;
+            margin-top: 20px;
+            color: var(--accent-green);
+            font-style: italic;
+        }
+
+        .cta-button {
+            margin-top: 50px;
+            padding: 18px 50px;
+            border: 2px solid var(--accent-gold);
+            background-color: transparent;
+            color: var(--text-ink);
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-family: var(--font-title);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: var(--accent-gold);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Work Styling */
+        .section-heading {
+            font-family: var(--font-title);
+            font-size: 4.5rem; 
+            color: var(--accent-green);
+            margin-bottom: 40px;
+        }
+
+        /* --- MASONRY / COLLAGE LAYOUT --- */
+        .gallery-grid {
+            column-count: 3; 
+            column-gap: 30px;
+            width: 90%;
+            max-width: 1300px;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                column-count: 1;
+            }
+        }
+
+        .art-piece {
+            background-color: white;
+            height: auto; 
+            margin-bottom: 30px; 
+            break-inside: avoid; 
+            display: block;
+            color: #ccc;
+            border: 1px solid #ddd;
+            box-shadow: 8px 8px 20px rgba(0,0,0,0.05);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden; 
+            transition: transform 0.3s;
+        }
+
+        .art-piece img, 
+        .art-piece video {
+            width: 100%;
+            height: auto; 
+            display: block; 
+            transition: transform 0.5s ease;
+        }
+
+        .art-piece:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-gold);
+            z-index: 10;
+        }
+
+        /* Contact Styling */
+        .email-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: white;
+            padding: 20px 40px;
+            border: 1px solid var(--accent-gold);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .email-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(200, 161, 101, 0.3);
+            background-color: #fffaef;
+        }
+
+        .email-icon {
+            width: 30px;
+            height: 30px;
+            stroke: var(--accent-green);
+        }
+
+        .contact-email {
+            font-size: 2rem;
+            margin: 0;
+            color: var(--text-ink);
+            font-weight: bold;
+        }
+
+        .tooltip-text {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--text-ink);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .email-card.copied .tooltip-text {
+            opacity: 1;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-ink);
+            color: var(--bg-paper);
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 5px solid var(--accent-gold);
+        }
+
+        footer p {
+            font-size: 1.6rem; 
+            margin: 10px 0;
+        }
+        
+        #main-content {
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="splash-screen">
+        <video id="splash-video" muted playsinline autoplay>
+            <source src="intro.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div id="main-content">
+        <nav>
+            <div class="nav-brand">
+                <img src="logo.png" alt="Suvarna's Sketchbook Logo">
+            </div>
+            <div class="nav-links">
+                <a href="#home" id="nav-home" class="active">Home</a>
+                <a href="#work" id="nav-work">Work</a>
+                <a href="#contact" id="nav-contact">Contact</a>
+            </div>
+        </nav>
+
+        <section id="home">
+            <div class="home-content">
+                <h1>Suvarna's<br>Sketchbook</h1>
+                <p>Digital Art • Illustrations • Creativity</p>
+                <a href="#work" class="cta-button">Open Book &rarr;</a>
+            </div>
+        </section>
+
+        <section id="work">
+            <h2 class="section-heading">My Works</h2>
+            
+            <div class="gallery-grid">
+
+                <div class="art-piece">
+                    <img src="art1.jpg" alt="art">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art2.jpg" alt="art">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art3.jpg" alt="art">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art4.jpg" alt="Art">
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art5.jpg" alt="Art">
+                </div>
+
+                <div class="art-piece">
+                    <video src="art3_video.mp4" controls loop></video>
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art6.jpg" alt="Art">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art7.jpg" alt="Art">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art8.jpg" alt="Art">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art9.jpg" alt="Art">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art10.jpg" alt="Art">
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art11.jpg" alt="Art">
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art12.jpg" alt="Art">
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art13.jpg" alt="Art">
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art14.jpg" alt="Art">
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art15.jpg" alt="Art">
+                </div>
+
+                 <div class="art-piece">
+                    <video src="art1_video.mp4" controls loop></video>
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art16.jpg" alt="Art">
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art17.jpg" alt="Art">
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art18.jpg" alt="Art">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art19.jpg" alt="Art">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art20.jpg" alt="Art">
+                </div>
+
+                <div class="art-piece">
+                    <video src="art2_video.mp4" controls loop></video>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2 class="section-heading">Lets Connect</h2>
+            <div class="email-card" onclick="copyEmail(this)">
+                <span class="tooltip-text">Copied!</span>
+                <svg class="email-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <p class="contact-email">suvarnasri710@gmail.com</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>Thank you for visiting</p>
+            <p>Total Visits:</p>
+<a href="https://www.hitwebcounter.com" target="_blank">
+<img src="https://hitwebcounter.com/counter/counter.php?page=17088489&style=0006&nbdigits=5&type=page&initCount=1200" title="Free Counter" Alt="web counter"   border="0" /></a>
+        </footer>
+    </div>
+
+    <script>
+        // --- JAVASCRIPT ---
+
+        const video = document.getElementById('splash-video');
+        const splashScreen = document.getElementById('splash-screen');
+        const mainContent = document.getElementById('main-content');
+
+        // Splash Logic
+        function endSplash() {
+            splashScreen.style.opacity = '0';
+            mainContent.style.opacity = '1';
+            document.body.style.overflow = 'auto'; 
+            window.scrollTo(0, 0); 
+            setTimeout(() => {
+                splashScreen.style.display = 'none';
+            }, 1000);
+        }
+
+        video.onended = endSplash;
+
+        setTimeout(() => {
+            if (splashScreen.style.display !== 'none' && video.paused) {
+                endSplash();
+            }
+        }, 8000);
+
+        // Visitor Counter
+        function updateVisitorCount() {
+            let count = localStorage.getItem('visitorCount');
+            if (!count) count = 1240; 
+            else count = parseInt(count) + 1;
+            localStorage.setItem('visitorCount', count);
+            document.getElementById('visitor-count').innerText = count;
+        }
+
+        // Email Copy
+        function copyEmail(element) {
+            const email = "suvarnasri710@gmail.com";
+            navigator.clipboard.writeText(email).then(() => {
+                element.classList.add('copied');
+                setTimeout(() => {
+                    element.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Active Link Highlighting
+       const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        // Logic: "Trigger when the element crosses the middle of the screen"
+        const observerOptions = {
+            root: null,
+            rootMargin: "-45% 0px -45% 0px", // This focuses on the middle 10% strip of screen
+            threshold: 0 
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    
+                    const activeId = entry.target.getAttribute('id');
+                    const activeLink = document.querySelector(`.nav-links a[href="#${activeId}"]`);
+                    
+                    if (activeLink) {
+                        activeLink.classList.add('active');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+
+        window.onload = updateVisitorCount;
+    </script>
+</body>
+</html>
