@@ -40,9 +40,11 @@
             background-color: var(--bg-paper);
             z-index: 2000;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             transition: opacity 1s ease;
+            cursor: pointer;
         }
 
         #splash-video {
@@ -52,6 +54,49 @@
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(193, 161, 101, 0.4);
             object-fit: cover;
+            
+            /* Start completely invisible */
+            opacity: 0; 
+            transform: scale(1.05);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        /* JavaScript will add this class ONLY when the video is ready */
+        #splash-video.video-ready {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* --- MOBILE FIX FOR SPLASH SCREEN --- */
+        @media (max-width: 768px) {
+            #splash-video {
+                width: 90%; /* Makes video wider on small phone screens */
+                border-radius: 12px;
+            }
+        }
+
+        #enter-btn {
+            margin-top: 30px;
+            padding: 12px 30px;
+            background-color: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-family: var(--font-title);
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            opacity: 0; /* Starts invisible */
+            animation: fadeInButton 1s ease forwards 2s; /* Fades in after 2 seconds */
+        }
+
+        #enter-btn:hover {
+            background-color: var(--accent-gold);
+            color: white;
+        }
+
+        @keyframes fadeInButton {
+            to { opacity: 1; }
         }
 
         /* --- NAVIGATION --- */
@@ -216,6 +261,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             position: relative;
+            text-decoration: none;
         }
 
         .email-card:hover {
@@ -282,6 +328,7 @@
     <div id="splash-screen">
         <video id="splash-video" muted playsinline autoplay>
             <source src="intro.mp4" type="video/mp4">
+            <button id="enter-btn" onclick="endSplash()">Open Sketchbook</button>
         </video>
     </div>
 
@@ -310,44 +357,48 @@
             
             <div class="gallery-grid">
 
-                <div class="art-piece">
-                    <img src="art1.jpg" alt="art">
+                 <div class="art-piece">
+                    <img src="shiva&Par.jpeg" alt="Shiva">
                 </div>
 
                 <div class="art-piece">
-                    <img src="art2.jpg" alt="art">
+                    <img src="art1.jpg" alt="Eyedrop">
                 </div>
 
                 <div class="art-piece">
-                    <img src="art3.jpg" alt="art">
+                    <img src="art2.jpg" alt="2eyes">
                 </div>
 
                 <div class="art-piece">
-                    <img src="art4.jpg" alt="Art">
+                    <img src="art3.jpg" alt="Eye">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art4.jpg" alt="Mandala eye">
                 </div>
 
                  <div class="art-piece">
-                    <img src="art5.jpg" alt="Art">
+                    <img src="art5.jpg" alt="Flower eye">
                 </div>
 
                 <div class="art-piece">
-                    <video src="art3_video.mp4" controls loop></video>
+                    <video src="art3_video.mp4" controls loop alt="dance"></video>
                 </div>
 
                  <div class="art-piece">
-                    <img src="art6.jpg" alt="Art">
+                    <img src="art6.jpg" alt="Taj Dance">
                 </div>
 
                 <div class="art-piece">
-                    <img src="art7.jpg" alt="Art">
+                    <img src="art7.jpg" alt="Taj Mahal">
                 </div>
 
                 <div class="art-piece">
-                    <img src="art8.jpg" alt="Art">
+                    <img src="art8.jpg" alt="Face mandala">
                 </div>
 
                 <div class="art-piece">
-                    <img src="art9.jpg" alt="Art">
+                    <img src="art9.jpg" alt="Boxed faces">
                 </div>
 
                 <div class="art-piece">
@@ -355,47 +406,55 @@
                 </div>
 
                  <div class="art-piece">
-                    <img src="art11.jpg" alt="Art">
+                    <img src="art11.jpg" alt="Mandala Doors">
                 </div>
 
                  <div class="art-piece">
-                    <img src="art12.jpg" alt="Art">
+                    <img src="art12.jpg" alt="Illustrations face">
                 </div>
 
                  <div class="art-piece">
-                    <img src="art13.jpg" alt="Art">
+                    <img src="art13.jpg" alt="radha krish eyes">
                 </div>
 
                  <div class="art-piece">
-                    <img src="art14.jpg" alt="Art">
+                    <img src="art14.jpg" alt="Violin">
                 </div>
 
                  <div class="art-piece">
-                    <img src="art15.jpg" alt="Art">
+                    <img src="art15.jpg" alt="Veena">
                 </div>
 
                  <div class="art-piece">
-                    <video src="art1_video.mp4" controls loop></video>
+                    <video src="art1_video.mp4" controls loop alt="Transistion"></video>
                 </div>
 
                  <div class="art-piece">
-                    <img src="art16.jpg" alt="Art">
-                </div>
-
-                 <div class="art-piece">
-                    <img src="art17.jpg" alt="Art">
-                </div>
-
-                 <div class="art-piece">
-                    <img src="art18.jpg" alt="Art">
+                    <img src="art16.jpg" alt="Girl violin">
                 </div>
 
                 <div class="art-piece">
-                    <img src="art19.jpg" alt="Art">
+                    <img src="Kashi.jpeg" alt="Kashi">
                 </div>
 
                 <div class="art-piece">
-                    <img src="art20.jpg" alt="Art">
+                    <img src="Mother.jpeg" alt="Mother">
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art17.jpg" alt="tree Ganesha">
+                </div>
+
+                 <div class="art-piece">
+                    <img src="art18.jpg" alt="Dance">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art19.jpg" alt="scenery">
+                </div>
+
+                <div class="art-piece">
+                    <img src="art20.jpg" alt="road">
                 </div>
 
                 <div class="art-piece">
@@ -405,23 +464,19 @@
             </div>
         </section>
 
-        <section id="contact">
+       <section id="contact">
             <h2 class="section-heading">Lets Connect</h2>
-            <div class="email-card" onclick="copyEmail(this)">
-                <span class="tooltip-text">Copied!</span>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=suvarnasri710@gmail.com" target="_blank" class="email-card">
                 <svg class="email-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                     <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
                 <p class="contact-email">suvarnasri710@gmail.com</p>
-            </div>
+            </a>
         </section>
 
         <footer>
             <p>Thank you for visiting</p>
-            <p>Total Visits:</p>
-<a href="https://www.hitwebcounter.com" target="_blank">
-<img src="https://hitwebcounter.com/counter/counter.php?page=17088489&style=0006&nbdigits=5&type=page&initCount=1200" title="Free Counter" Alt="web counter"   border="0" /></a>
         </footer>
     </div>
 
@@ -429,6 +484,12 @@
         // --- JAVASCRIPT ---
 
         const video = document.getElementById('splash-video');
+        
+        // Wait until the video frame is completely downloaded to show it
+        video.addEventListener('canplay', () => {
+            video.classList.add('video-ready');
+        });
+
         const splashScreen = document.getElementById('splash-screen');
         const mainContent = document.getElementById('main-content');
 
@@ -445,11 +506,13 @@
 
         video.onended = endSplash;
 
+        splashScreen.addEventListener('click', endSplash);
+
         setTimeout(() => {
-            if (splashScreen.style.display !== 'none' && video.paused) {
+            if (splashScreen.style.display !== 'none') {
                 endSplash();
             }
-        }, 8000);
+        }, 12000);
 
         // Visitor Counter
         function updateVisitorCount() {
