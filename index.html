@@ -214,8 +214,45 @@
         }
 
         @media (max-width: 768px) {
+            /* 1. Fix the giant text */
+            .home-content h1 {
+                font-size: 3.2rem; /* Shrinks the main title */
+                line-height: 1.2;
+            }
+
+            .home-content p {
+                font-size: 1.2rem; /* Shrinks the subtitle */
+            }
+
+            /* 2. Fix the squished navigation */
+            nav {
+                flex-direction: column; /* Stacks logo on top, links below */
+                padding: 15px 10px;
+                gap: 10px;
+            }
+
+            .nav-brand img {
+                height: 80px; /* Makes logo fit better on phones */
+            }
+
+            .nav-links {
+                display: flex;
+                justify-content: center;
+                gap: 20px; /* Puts spaces between Home, Work, Contact */
+            }
+
+            .nav-links a {
+                margin: 0; /* Removes old spacing */
+                font-size: 1.2rem;
+            }
+
+            /* 3. Keep your existing gallery and video fixes */
             .gallery-grid {
                 column-count: 1;
+            }
+            #splash-video {
+                width: 90%;
+                border-radius: 12px;
             }
         }
 
@@ -358,7 +395,7 @@
             <div class="gallery-grid">
 
                  <div class="art-piece">
-                    <img src="shiva&Par.jpeg" alt="Shiva">
+                    <img src="shiva&par.jpeg" alt="Shiva">
                 </div>
 
                 <div class="art-piece">
